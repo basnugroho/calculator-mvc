@@ -14,6 +14,7 @@
 		709301F31F4FA7DE0001207F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 709301F11F4FA7DE0001207F /* LaunchScreen.storyboard */; };
 		709301FE1F4FA7DE0001207F /* s6134117CalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709301FD1F4FA7DE0001207F /* s6134117CalculatorTests.swift */; };
 		709302091F4FA7DE0001207F /* s6134117CalculatorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709302081F4FA7DE0001207F /* s6134117CalculatorUITests.swift */; };
+		70A3C7531F622111008EA6D0 /* CalculatorBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A3C7521F622111008EA6D0 /* CalculatorBrain.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		709302041F4FA7DE0001207F /* s6134117CalculatorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = s6134117CalculatorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		709302081F4FA7DE0001207F /* s6134117CalculatorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = s6134117CalculatorUITests.swift; sourceTree = "<group>"; };
 		7093020A1F4FA7DE0001207F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		70A3C7521F622111008EA6D0 /* CalculatorBrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorBrain.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 				709301EF1F4FA7DE0001207F /* Assets.xcassets */,
 				709301F11F4FA7DE0001207F /* LaunchScreen.storyboard */,
 				709301F41F4FA7DE0001207F /* Info.plist */,
+				70A3C7521F622111008EA6D0 /* CalculatorBrain.swift */,
 			);
 			path = s6134117Calculator;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70A3C7531F622111008EA6D0 /* CalculatorBrain.swift in Sources */,
 				709301EB1F4FA7DE0001207F /* ViewController.swift in Sources */,
 				709301E91F4FA7DE0001207F /* AppDelegate.swift in Sources */,
 			);
@@ -417,11 +421,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = YTU6T5ZRTW;
 				INFOPLIST_FILE = s6134117Calculator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.s6134117Calculator;
+				PRODUCT_BUNDLE_IDENTIFIER = YTU6T5ZRTW.informatika.s6134117calculator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -430,11 +436,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = YTU6T5ZRTW;
 				INFOPLIST_FILE = s6134117Calculator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.s6134117Calculator;
+				PRODUCT_BUNDLE_IDENTIFIER = YTU6T5ZRTW.informatika.s6134117calculator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -516,6 +524,7 @@
 				7093020F1F4FA7DE0001207F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		709302101F4FA7DE0001207F /* Build configuration list for PBXNativeTarget "s6134117CalculatorTests" */ = {
 			isa = XCConfigurationList;
@@ -524,6 +533,7 @@
 				709302121F4FA7DE0001207F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		709302131F4FA7DE0001207F /* Build configuration list for PBXNativeTarget "s6134117CalculatorUITests" */ = {
 			isa = XCConfigurationList;
@@ -532,6 +542,7 @@
 				709302151F4FA7DE0001207F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
