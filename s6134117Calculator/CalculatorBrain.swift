@@ -49,7 +49,9 @@ struct CalculatorBrain {
         "√" : Operation.unaryOperation (sqrt),
         "cos" : Operation.unaryOperation (cos),
         "±" : Operation.unaryOperation(changeSign),
-        "x" : Operation.binaryOperation(multiply),
+        "x" : Operation.binaryOperation({(op1: Double, op2: Double)->Double in
+            return op1 * op2
+        }),
         "=" : Operation.equals
     ]
     
