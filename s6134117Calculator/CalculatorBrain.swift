@@ -52,6 +52,9 @@ struct CalculatorBrain {
         "x" : Operation.binaryOperation({(op1: Double, op2: Double)->Double in
             return op1 * op2
         }),
+        "/" : Operation.binaryOperation({$0 / $1}),
+        "+" : Operation.binaryOperation({$0 + $1}),
+        "-" : Operation.binaryOperation({$0 - $1}),
         "=" : Operation.equals
     ]
     
