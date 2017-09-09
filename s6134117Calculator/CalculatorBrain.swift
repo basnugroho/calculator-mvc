@@ -13,34 +13,44 @@ func changeSign (input:Double) -> Double {
 }
 
 private struct PendingBinaryOperation {
+    
     let function: (Double, Double)->Double
-    let firsOperand: Double
+    let firstOperand: Double
     
     func perform(with secondOperand: Double)->Double {
-        return function (firsOperand, secondOperand)
+        return function (firstOperand, secondOperand)
     }
+    
+}
+
+func multiply (op1: Double, op2: Double)->Double {
+    return op1 * op2
 }
 
 
 struct CalculatorBrain {
     
-    //private var temp: PendingBinaryOperation?
+    private var tampung: PendingBinaryOperation?
     
     private var accumulator: Double?
     
     //agar bisa func
     private enum Operation {
         case constant (Double)
-        case unaryOperation ((Double) -> Double)
-        case binaryOperation ((Double, Double) -> Double)
+        case unaryOperation ((Double)->Double)
+        case binaryOperation ((Double, Double)->Double)
         case equals
     }
     
+    //dictionary
     private var operations: Dictionary <String, Operation> = [
         "π" : Operation.constant (Double.pi),
         "e" : Operation.constant (M_E),
         "√" : Operation.unaryOperation (sqrt),
         "cos" : Operation.unaryOperation (cos),
+        "±" : Operation.unaryOperation(changeSign),
+        "x" : Operation.binaryOperation(multiply),
+        "=" : Operation.equals
     ]
     
     var result: Double? {
@@ -50,17 +60,31 @@ struct CalculatorBrain {
     }
     
     mutating func doOperation (_ symbol: String) {
-        switch symbol {
-        case "√":
-            if let operand = accumulator {
-                accumulator = sqrt(operand)
+        if let operation = operations[symbol] {
+            switch operation {
+            case .constant(let value):
+                accumulator = value
+            case .unaryOperation(let function):
+                if let data = accumulator {
+                    accumulator = function(data)
+                }
+            case .binaryOperation(let function):
+                if accumulator != nil {
+                    tampung = PendingBinaryOperation(function: function, firstOperand: accumulator!)
+                    accumulator = nil
+                }
+                break
+            case .equals:
+                doPendingBinaryOperation()
+                break
             }
-        case "C":
-                accumulator = 0
-        case "π":
-                accumulator = Double.pi
-        default:
-            print ("nothing to do here")
+        }
+    }
+    
+    mutating func doPendingBinaryOperation() {
+        if(tampung != nil && accumulator != nil) {
+            accumulator = tampung!.perform(with: accumulator!)
+            tampung = nil
         }
     }
     
