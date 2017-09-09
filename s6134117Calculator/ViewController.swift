@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     
     var userIsTyping: Bool = false
     
-    var DisplayValue:Double {
+    var displayValue:Double {
         get {
             return Double(displayLabel.text!)!
         }
@@ -23,10 +23,11 @@ class ViewController: UIViewController {
         }
     }
     
+    //operator or accumulator button
     @IBAction func doOperation(_ sender: UIButton) {
         //baru
         if userIsTyping {
-            brain.setOeprand(DisplayValue)
+            brain.setOperand(displayValue)
             userIsTyping = false
         }
         
@@ -35,7 +36,7 @@ class ViewController: UIViewController {
         }
         
         if let result = brain.result {
-            DisplayValue = result
+            displayValue = result
         }
         
         //lama pindah ke brain
@@ -53,6 +54,7 @@ class ViewController: UIViewController {
     }
     @IBOutlet weak var displayLabel: UILabel!
     
+    //digit button
     @IBAction func showDigit(_ sender: UIButton) {
         if userIsTyping {
             let digit = sender.currentTitle!
