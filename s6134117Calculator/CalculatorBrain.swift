@@ -8,24 +8,32 @@
 
 import Foundation
 
-func changeSign (input:Double) -> Double {
-    return -input
-}
+
 
 private struct PendingBinaryOperation {
     
-    let function: (Double, Double)->Double
+    let hitung: (Double, Double)->Double
+    
     let firstOperand: Double
     
-    func perform(with secondOperand: Double)->Double {
-        return function (firstOperand, secondOperand)
+    func hajar(with secondOperand: Double)->Double {
+        return hitung (firstOperand, secondOperand)
     }
     
+}
+
+
+func changeSign (input:Double) -> Double {
+    return -input
 }
 
 func multiply (op1: Double, op2: Double)->Double {
     return op1 * op2
 }
+
+var brain:CalculatorBrain = CalculatorBrain()
+
+
 
 
 struct CalculatorBrain {
@@ -34,7 +42,23 @@ struct CalculatorBrain {
     
     private var accumulator: Double?
     
-    //agar bisa func
+    private var memory = 0.0
+    
+    var result: Double? {
+        get {
+            return accumulator
+        }
+    }
+    
+    var recall: Double? {
+        get {
+            return memory
+        }
+    }
+    
+
+    
+    //enum, agar bisa func
     private enum Operation {
         case constant (Double)
         case unaryOperation ((Double)->Double)
@@ -43,26 +67,30 @@ struct CalculatorBrain {
     }
     
     //dictionary
-    private var operations: Dictionary <String, Operation> = [
+    private var operations:Dictionary <String, Operation> = [
         "π" : Operation.constant (Double.pi),
         "e" : Operation.constant (M_E),
+        "C" : Operation.constant(0),
         "√" : Operation.unaryOperation (sqrt),
+        "sin" : Operation.unaryOperation(sin),
         "cos" : Operation.unaryOperation (cos),
+        "tan" : Operation.unaryOperation(tan),
+        "asin" : Operation.unaryOperation(asin),
+        "acos" : Operation.unaryOperation(acos),
+        "atan" : Operation.unaryOperation(atan),
+        "log" : Operation.unaryOperation (log10),
         "±" : Operation.unaryOperation(changeSign),
+        "%" : Operation.unaryOperation({$0/100.0}),
         "x" : Operation.binaryOperation({(op1: Double, op2: Double)->Double in
-            return op1 * op2
-        }),
-        "/" : Operation.binaryOperation({$0 / $1}),
+                return op1 * op2
+                }),
+        "÷" : Operation.binaryOperation({$0 / $1}),
         "+" : Operation.binaryOperation({$0 + $1}),
         "-" : Operation.binaryOperation({$0 - $1}),
         "=" : Operation.equals
     ]
     
-    var result: Double? {
-        get {
-            return accumulator
-        }
-    }
+
     
     mutating func doOperation (_ symbol: String) {
         if let operation = operations[symbol] {
@@ -75,7 +103,7 @@ struct CalculatorBrain {
                 }
             case .binaryOperation(let function):
                 if accumulator != nil {
-                    tampung = PendingBinaryOperation(function: function, firstOperand: accumulator!)
+                    tampung = PendingBinaryOperation(hitung: function, firstOperand: accumulator!)
                     accumulator = nil
                 }
                 break
@@ -88,7 +116,7 @@ struct CalculatorBrain {
     
     mutating func doPendingBinaryOperation() {
         if(tampung != nil && accumulator != nil) {
-            accumulator = tampung!.perform(with: accumulator!)
+            accumulator = tampung!.hajar(with: accumulator!)
             tampung = nil
         }
     }
@@ -97,4 +125,21 @@ struct CalculatorBrain {
         accumulator = operand
     }
     
+    mutating func doMemorization (_ symbol: String, _ value: Double) {
+        switch symbol {
+        case "m+":
+            memory = memory + value
+            print(memory)
+        case "m-":
+            memory = memory - value
+            print(memory)
+        case "mc":
+            memory = 0.0
+            print(memory)
+        case "mr":
+            accumulator = memory
+        default :
+            print("nothing to do")
+        }
+    }
 }

@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     
     private var brain:CalculatorBrain = CalculatorBrain()
     
-    var userIsTyping: Bool = false
+    var userIsTyping:Bool = false
     
     var displayValue:Double {
         get {
@@ -22,6 +22,19 @@ class ViewController: UIViewController {
             displayLabel.text = String(newValue)
         }
     }
+    
+    
+    @IBAction func doMemorization(_ sender: UIButton) {
+        
+        if let memorySymbol = sender.currentTitle {
+            brain.doMemorization(memorySymbol, displayValue)
+        }
+        
+        if let result = brain.result {
+            displayValue = result
+        }
+    }
+    
     
     //operator or accumulator button
     @IBAction func doOperation(_ sender: UIButton) {
@@ -52,6 +65,8 @@ class ViewController: UIViewController {
 //        }
         
     }
+
+    
     @IBOutlet weak var displayLabel: UILabel!
     
     //digit button
@@ -67,6 +82,8 @@ class ViewController: UIViewController {
             userIsTyping = true
         }
     }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
