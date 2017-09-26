@@ -31,6 +31,10 @@ func multiply (op1: Double, op2: Double)->Double {
     return op1 * op2
 }
 
+func factorial (_ n: Double) -> Double {
+    return n == 0 ? 1 : n * factorial(n - 1)
+}
+
 var brain:CalculatorBrain = CalculatorBrain()
 
 
@@ -81,6 +85,7 @@ struct CalculatorBrain {
         "log" : Operation.unaryOperation (log10),
         "±" : Operation.unaryOperation(changeSign),
         "%" : Operation.unaryOperation({$0/100.0}),
+        "x!" : Operation.unaryOperation({(_ n: Double)->Double in return n == 0 ? 1 : n * factorial(n - 1)}),
         "x" : Operation.binaryOperation({(op1: Double, op2: Double)->Double in
                 return op1 * op2
                 }),
