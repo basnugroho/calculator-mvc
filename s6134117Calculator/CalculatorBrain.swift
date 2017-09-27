@@ -35,6 +35,10 @@ func factorial (_ n: Double) -> Double {
     return n == 0 ? 1 : n * factorial(n - 1)
 }
 
+func exponent2(n: Double) -> Double {
+    return pow(n, 2)
+}
+
 var brain:CalculatorBrain = CalculatorBrain()
 
 
@@ -83,6 +87,7 @@ struct CalculatorBrain {
         "acos" : Operation.unaryOperation(acos),
         "atan" : Operation.unaryOperation(atan),
         "log" : Operation.unaryOperation (log10),
+        "ln" : Operation.unaryOperation(log),
         "±" : Operation.unaryOperation(changeSign),
         "%" : Operation.unaryOperation({$0/100.0}),
         "x!" : Operation.unaryOperation({(_ n: Double)->Double in return n == 0 ? 1 : n * factorial(n - 1)}),
