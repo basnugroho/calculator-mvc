@@ -35,9 +35,16 @@ func factorial (_ n: Double) -> Double {
     return n == 0 ? 1 : n * factorial(n - 1)
 }
 
-func exponent2(n: Double) -> Double {
+func exponent2 (n: Double) -> Double {
     return pow(n, 2)
 }
+
+func exponent3 (n: Double) -> Double {
+    return pow(n, 3)
+}
+
+
+
 
 var brain:CalculatorBrain = CalculatorBrain()
 
@@ -51,6 +58,7 @@ struct CalculatorBrain {
     private var accumulator: Double?
     
     private var memory = 0.0
+    
     
     var result: Double? {
         get {
@@ -69,6 +77,7 @@ struct CalculatorBrain {
     //enum, agar bisa func
     private enum Operation {
         case constant (Double)
+        case generator (()->Double)
         case unaryOperation ((Double)->Double)
         case binaryOperation ((Double, Double)->Double)
         case equals
@@ -79,6 +88,7 @@ struct CalculatorBrain {
         "π" : Operation.constant (Double.pi),
         "e" : Operation.constant (M_E),
         "C" : Operation.constant(0),
+        "Rand" : Operation.generator(drand48),
         "√" : Operation.unaryOperation (sqrt),
         "sin" : Operation.unaryOperation(sin),
         "cos" : Operation.unaryOperation (cos),
@@ -87,6 +97,8 @@ struct CalculatorBrain {
         "acos" : Operation.unaryOperation(acos),
         "atan" : Operation.unaryOperation(atan),
         "log" : Operation.unaryOperation (log10),
+        "pow2" : Operation.unaryOperation (exponent2),
+        "pow3" : Operation.unaryOperation (exponent3),
         "ln" : Operation.unaryOperation(log),
         "±" : Operation.unaryOperation(changeSign),
         "%" : Operation.unaryOperation({$0/100.0}),
@@ -107,6 +119,8 @@ struct CalculatorBrain {
             switch operation {
             case .constant(let value):
                 accumulator = value
+            case .generator(let function):
+                accumulator = function()
             case .unaryOperation(let function):
                 if let data = accumulator {
                     accumulator = function(data)
