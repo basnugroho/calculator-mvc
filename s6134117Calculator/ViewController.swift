@@ -14,6 +14,12 @@ class ViewController: UIViewController {
     
     var userIsTyping:Bool = false
     
+    enum CalculatorModes {
+        case deg,rad
+    }
+    
+    var calculatorMode = CalculatorModes.deg
+    
     var displayValue:Double {
         get {
             return Double(displayLabel.text!)!
@@ -23,6 +29,21 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var radDegInfoLabel: UILabel!
+    
+    @IBOutlet weak var radDegButton: UIButton!
+    
+    @IBAction func doToggleRadDeg(_ sender: Any) {
+        if calculatorMode == CalculatorModes.deg {
+            calculatorMode = CalculatorModes.rad
+            radDegInfoLabel.text = "rad"
+            radDegButton.setTitle("deg", for: .normal)
+        } else {
+            calculatorMode = CalculatorModes.deg
+            radDegInfoLabel.text = "deg"
+            radDegButton.setTitle("rad", for: .normal)
+        }
+    }
     
     @IBAction func doMemorization(_ sender: UIButton) {
         
@@ -46,6 +67,9 @@ class ViewController: UIViewController {
         
         if let operationSymbol = sender.currentTitle {
             brain.doOperation(operationSymbol)
+            if calculatorMode == CalculatorModes.rad {
+                brain.doOperation(operationSymbol, 1)
+            }
         }
         
         if let result = brain.result {

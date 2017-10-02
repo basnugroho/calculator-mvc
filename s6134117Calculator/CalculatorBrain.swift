@@ -7,8 +7,7 @@
 //
 
 import Foundation
-
-
+import CoreGraphics
 
 private struct PendingBinaryOperation {
     
@@ -43,12 +42,58 @@ func exponent3 (n: Double) -> Double {
     return pow(n, 3)
 }
 
+func degreesToRadians(degrees: Double) -> Double {
+    return degrees * Double(Double.pi) / 180
+}
 
+func sinus (number: Double, mode: Int = 0)->Double {
+    if mode == 1 { //rad mode
+        print(mode)
+        return sinus(number: number)
+    }
+    return sin(number * Double.pi / 180) //deg mode
+}
+
+func cosinus (number: Double, mode: Int = 0)->Double {
+    if mode != 0 { //rad mode
+        print(mode)
+        return cosinus(number: number)
+    }
+    return cos(number * Double.pi / 180) //deg mode
+}
+
+func tangent (number: Double, mode: Int = 0)->Double {
+    if mode != 0 { //rad mode
+        print(mode)
+        return tangent(number: number)
+    }
+    return tan(number * Double.pi / 180) //deg mode
+}
+
+func asin (number: Double, mode: Int = 0)->Double {
+    if mode != 0 { //rad mode
+        print(mode)
+        return asin(number: number)
+    }
+    return asin(number * Double.pi / 180) //deg mode
+}
+func acos (number: Double, mode: Int = 0)->Double {
+    if mode != 0 { //rad mode
+        print(mode)
+        return acos(number: number)
+    }
+    return acos(number * Double.pi / 180) //deg mode
+}
+func atan (number: Double, mode: Int = 0)->Double {
+    if mode != 0 { //rad mode
+        print(mode)
+        return atan(number: number)
+    }
+    return atan(number * Double.pi / 180) //deg mode
+}
 
 
 var brain:CalculatorBrain = CalculatorBrain()
-
-
 
 
 struct CalculatorBrain {
@@ -73,12 +118,12 @@ struct CalculatorBrain {
     }
     
 
-    
     //enum, agar bisa func
     private enum Operation {
         case constant (Double)
         case generator (()->Double)
         case unaryOperation ((Double)->Double)
+        case trigonometriOperation ((Double,Int)->Double)
         case binaryOperation ((Double, Double)->Double)
         case equals
     }
@@ -90,12 +135,12 @@ struct CalculatorBrain {
         "C" : Operation.constant(0),
         "Rand" : Operation.generator(drand48),
         "√" : Operation.unaryOperation (sqrt),
-        "sin" : Operation.unaryOperation(sin),
-        "cos" : Operation.unaryOperation (cos),
-        "tan" : Operation.unaryOperation(tan),
-        "asin" : Operation.unaryOperation(asin),
-        "acos" : Operation.unaryOperation(acos),
-        "atan" : Operation.unaryOperation(atan),
+        "sin" : Operation.trigonometriOperation(sinus),
+        "cos" : Operation.trigonometriOperation(cosinus),
+        "tan" : Operation.trigonometriOperation(tangent),
+        "asin" : Operation.trigonometriOperation(asin),
+        "acos" : Operation.trigonometriOperation(acos),
+        "atan" : Operation.trigonometriOperation(atan),
         "log" : Operation.unaryOperation (log10),
         "pow2" : Operation.unaryOperation (exponent2),
         "pow3" : Operation.unaryOperation (exponent3),
@@ -112,9 +157,8 @@ struct CalculatorBrain {
         "=" : Operation.equals
     ]
     
-
     
-    mutating func doOperation (_ symbol: String) {
+    mutating func doOperation (_ symbol: String,_ mode: Int = 0) {
         if let operation = operations[symbol] {
             switch operation {
             case .constant(let value):
@@ -124,6 +168,13 @@ struct CalculatorBrain {
             case .unaryOperation(let function):
                 if let data = accumulator {
                     accumulator = function(data)
+                }
+            case .trigonometriOperation(let function):
+                if let data = accumulator, mode == 0 { //deg
+                    accumulator = function(data, 0)
+                }
+                else if let data = accumulator, mode == 1 {
+                    accumulator = function(data, 1) // rad
                 }
             case .binaryOperation(let function):
                 if accumulator != nil {
