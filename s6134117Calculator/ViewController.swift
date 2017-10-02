@@ -66,9 +66,11 @@ class ViewController: UIViewController {
         }
         
         if let operationSymbol = sender.currentTitle {
-            brain.doOperation(operationSymbol)
+
             if calculatorMode == CalculatorModes.rad {
                 brain.doOperation(operationSymbol, 1)
+            } else {
+                brain.doOperation(operationSymbol, 0)
             }
         }
         

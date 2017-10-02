@@ -42,16 +42,17 @@ func exponent3 (n: Double) -> Double {
     return pow(n, 3)
 }
 
-func degreesToRadians(degrees: Double) -> Double {
-    return degrees * Double(Double.pi) / 180
+func degToRad (_ degree: Double) -> Double {
+    return degree * (Double.pi/180)
 }
 
-func sinus (number: Double, mode: Int = 0)->Double {
-    if mode == 1 { //rad mode
-        print(mode)
-        return sinus(number: number)
+func sinus (number: Double, mode: Int)->Double {
+    if mode != 0 { //rad mode
+        return sin(number)
     }
-    return sin(number * Double.pi / 180) //deg mode
+    else {
+        return sin(number * Double.pi / 180) //deg mode
+    }
 }
 
 func cosinus (number: Double, mode: Int = 0)->Double {
@@ -123,7 +124,7 @@ struct CalculatorBrain {
         case constant (Double)
         case generator (()->Double)
         case unaryOperation ((Double)->Double)
-        case trigonometriOperation ((Double,Int)->Double)
+        case trigonometriOperation ((Double, Int)->Double)
         case binaryOperation ((Double, Double)->Double)
         case equals
     }
@@ -158,7 +159,7 @@ struct CalculatorBrain {
     ]
     
     
-    mutating func doOperation (_ symbol: String,_ mode: Int = 0) {
+    mutating func doOperation (_ symbol: String,_ mode: Int) {
         if let operation = operations[symbol] {
             switch operation {
             case .constant(let value):
@@ -170,12 +171,17 @@ struct CalculatorBrain {
                     accumulator = function(data)
                 }
             case .trigonometriOperation(let function):
-                if let data = accumulator, mode == 0 { //deg
-                    accumulator = function(data, 0)
+                if mode == 0 { //deg
+                    let degree = accumulator
+                    accumulator = function(degree!, 0)
+                    break
                 }
-                else if let data = accumulator, mode == 1 {
-                    accumulator = function(data, 1) // rad
+                if mode == 1 {
+                    let rad = accumulator
+                    accumulator = function(rad!, 1) // rad
+                    break
                 }
+                break
             case .binaryOperation(let function):
                 if accumulator != nil {
                     tampung = PendingBinaryOperation(hitung: function, firstOperand: accumulator!)
