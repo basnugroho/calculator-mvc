@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import CoreGraphics
 
 private struct PendingBinaryOperation {
     
@@ -20,7 +19,6 @@ private struct PendingBinaryOperation {
     }
     
 }
-
 
 func changeSign (input:Double) -> Double {
     return -input
@@ -42,10 +40,6 @@ func exponent3 (n: Double) -> Double {
     return pow(n, 3)
 }
 
-func degToRad (_ degree: Double) -> Double {
-    return degree * (Double.pi/180)
-}
-
 func sinus (number: Double, mode: Int)->Double {
     if mode != 0 { //rad mode
         return sin(number)
@@ -54,33 +48,26 @@ func sinus (number: Double, mode: Int)->Double {
         return sin(number * Double.pi / 180) //deg mode
     }
 }
-
 func cosinus (number: Double, mode: Int = 0)->Double {
     if mode != 0 { //rad mode
-        print(mode)
         return cosinus(number: number)
     }
     return cos(number * Double.pi / 180) //deg mode
 }
-
 func tangent (number: Double, mode: Int = 0)->Double {
     if mode != 0 { //rad mode
-        print(mode)
         return tangent(number: number)
     }
     return tan(number * Double.pi / 180) //deg mode
 }
-
 func asin (number: Double, mode: Int = 0)->Double {
     if mode != 0 { //rad mode
-        print(mode)
         return asin(number: number)
     }
     return asin(number * Double.pi / 180) //deg mode
 }
 func acos (number: Double, mode: Int = 0)->Double {
     if mode != 0 { //rad mode
-        print(mode)
         return acos(number: number)
     }
     return acos(number * Double.pi / 180) //deg mode
@@ -93,9 +80,7 @@ func atan (number: Double, mode: Int = 0)->Double {
     return atan(number * Double.pi / 180) //deg mode
 }
 
-
 var brain:CalculatorBrain = CalculatorBrain()
-
 
 struct CalculatorBrain {
     
@@ -104,7 +89,6 @@ struct CalculatorBrain {
     private var accumulator: Double?
     
     private var memory = 0.0
-    
     
     var result: Double? {
         get {
@@ -118,7 +102,6 @@ struct CalculatorBrain {
         }
     }
     
-
     //enum, agar bisa func
     private enum Operation {
         case constant (Double)
@@ -157,7 +140,6 @@ struct CalculatorBrain {
         "-" : Operation.binaryOperation({$0 - $1}),
         "=" : Operation.equals
     ]
-    
     
     mutating func doOperation (_ symbol: String,_ mode: Int) {
         if let operation = operations[symbol] {

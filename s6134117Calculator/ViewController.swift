@@ -46,16 +46,13 @@ class ViewController: UIViewController {
     }
     
     @IBAction func doMemorization(_ sender: UIButton) {
-        
         if let memorySymbol = sender.currentTitle {
             brain.doMemorization(memorySymbol, displayValue)
         }
-        
         if let result = brain.result {
             displayValue = result
         }
     }
-    
     
     //operator or accumulator button
     @IBAction func doOperation(_ sender: UIButton) {
@@ -66,7 +63,6 @@ class ViewController: UIViewController {
         }
         
         if let operationSymbol = sender.currentTitle {
-
             if calculatorMode == CalculatorModes.rad {
                 brain.doOperation(operationSymbol, 1)
             } else {
@@ -78,7 +74,7 @@ class ViewController: UIViewController {
             displayValue = result
         }
         
-        //lama pindah ke brain
+//lama pindah ke brain
 //        if let operationSymbol = sender.currentTitle {
 //            switch operationSymbol {
 //            case "√":
@@ -89,10 +85,8 @@ class ViewController: UIViewController {
 //                print("Nothing to do here")
 //            }
 //        }
-        
     }
 
-    
     @IBOutlet weak var displayLabel: UILabel!
     
     //digit button
@@ -108,8 +102,6 @@ class ViewController: UIViewController {
             userIsTyping = true
         }
     }
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
